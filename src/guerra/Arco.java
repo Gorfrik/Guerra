@@ -18,10 +18,7 @@ public class Arco extends Ataque{
         
     }
 
-    @Override
-    public void equiparPersonaje(personaje pj) {
-        
-    }
+   
    
    
 }

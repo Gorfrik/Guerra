@@ -9,7 +9,8 @@ package guerra;
  * @author usuario
  */
 public interface Arma {
-    
+
     void equiparPersonaje(personaje pj);
+
     
 }

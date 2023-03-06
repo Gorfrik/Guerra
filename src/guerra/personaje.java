@@ -41,8 +41,9 @@ public class personaje {
             switch (resp) {
                 case "arco":
                     if(Armaspj.get(i) instanceof Arco ar)
-                        ar.ActivarAtaque(this);
+                        
                         ar.equiparPersonaje(this);
+                        ar.ActivarAtaque(this);
                         
                     break;
                 case "espada":

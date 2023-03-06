@@ -8,17 +8,20 @@ package guerra;
  *
  * @author usuario
  */
-public class Arco extends Ataque{
-   float porcentajeAtq=0.15f;
+public class Arco extends Ataque {
 
- 
-   
+    float porcentajeAtq = 0.15f;
+
     @Override
     void ActivarAtaque(personaje pj) {
-        
+
     }
 
-   
-   
-   
+    public void equiparPersonaje(personaje pj) {
+
+        float nuevoAt = (float) pj.getPuntosAtaque() + ((float) pj.getPuntosAtaque() * this.porcentajeAtq);
+        pj.setPuntosAtaque(nuevoAt);
+
+    }
+
 }

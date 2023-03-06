@@ -12,10 +12,5 @@ abstract class Ataque implements Arma{
     
      abstract void ActivarAtaque(personaje pj);
      
-     public void equiparPersonaje(personaje pj) {
-        
-        float nuevoAt = (float) pj.getPuntosAtaque() + ((float) pj.getPuntosAtaque() * this.porcentajeAtq);
-        pj.setPuntosAtaque(nuevoAt);
-
-    }
+     
 }

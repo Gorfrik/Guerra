@@ -8,10 +8,9 @@ package guerra;
  *
  * @author usuario
  */
-abstract class Ataque implements Arma {
+abstract class Defensa implements Arma {
 
-    float PorcentajeAtq;
+    float PorcentajeVida;
 
-    abstract void ActivarAtaque(personaje pj);
-
+    abstract void ActivarProteccion(personaje pj);
 }

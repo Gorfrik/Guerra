@@ -10,17 +10,21 @@ package guerra;
  */
 public class Arco extends Ataque {
 
-    float porcentajeAtq = 0.15f;
+    public Arco() {
+        this.PorcentajeAtq=0.15f;
+    }
 
     @Override
     void ActivarAtaque(personaje pj) {
-
+        pj.setAtaqueArquero(true);
     }
 
+    @Override
     public void equiparPersonaje(personaje pj) {
 
-        float nuevoAt = (float) pj.getPuntosAtaque() + ((float) pj.getPuntosAtaque() * this.porcentajeAtq);
+        float nuevoAt = (float) pj.getPuntosAtaque() + ((float) pj.getPuntosAtaque() * this.PorcentajeAtq);
         pj.setPuntosAtaque(nuevoAt);
+        ActivarAtaque(pj);
 
     }
 

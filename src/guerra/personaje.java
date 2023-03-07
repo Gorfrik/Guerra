@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class personaje {
 
     private String nombre;
-    private int PuntosVida;
+    private double PuntosVida;
     private double PuntosAtaque;
     private boolean proteccionArquero;
     private boolean proteccionCuerpoACuerpo;
@@ -25,9 +25,9 @@ public class personaje {
     public personaje(String nombre) {
         this.nombre = nombre;
         this.PuntosVida = 100;
-        this.PuntosAtaque = 5;
+        this.PuntosAtaque = 10;
         this.ataqueArquero = false;
-        this.ataqueArquero = false;
+        this.ataqueCuerpoACuerpo = false;
         this.proteccionArquero = false;
         this.proteccionCuerpoACuerpo = false;
     }
@@ -40,22 +40,62 @@ public class personaje {
 
             switch (resp) {
                 case "arco":
-                    if(Armaspj.get(i) instanceof Arco ar)
+                    if (Armaspj.get(i) instanceof Arco ar) {
                         ar.equiparPersonaje(this);
-                        
-                        
+                    }
                     break;
                 case "espada":
-                    if(Armaspj.get(i) instanceof Espada es)
+                    if (Armaspj.get(i) instanceof Espada es) {
                         es.equiparPersonaje(this);
+                    }
                     break;
                 case "escudo":
-                    
+                         if(Armaspj.get(i) instanceof Escudo esc)
+                        esc.equiparPersonaje(this);
                     break;
                 case "armadura":
-                    
+                         if(Armaspj.get(i) instanceof Armadura ar)
+                        ar.equiparPersonaje(this);
                     break;
             }
+        }
+    }
+
+    public void añadirArm(Arma arm) {
+        Armaspj.add(arm);
+    }
+
+    public void quitarArm(String armaTirar) {
+        boolean noEncontrado = true;
+        for (int i = 0; i < Armaspj.size(); i++) {
+            if (armaTirar.equalsIgnoreCase("arco")) {
+                if (Armaspj.get(i) instanceof Arco) {
+                    Armaspj.remove(i);
+                    noEncontrado=false;
+                    break;
+                }
+            } else if (armaTirar.equalsIgnoreCase("espada")) {
+                if (Armaspj.get(i) instanceof Espada) {
+                    Armaspj.remove(i);
+                    noEncontrado=false;
+                    break;
+                }
+            } else if (armaTirar.equalsIgnoreCase("armadura")) {
+                if (Armaspj.get(i) instanceof Armadura) {
+                    Armaspj.remove(i);
+                    noEncontrado=false;
+                    break;
+                }
+            } else if (armaTirar.equalsIgnoreCase("escudo")) {
+                if (Armaspj.get(i) instanceof Escudo) {
+                    Armaspj.remove(i);
+                    noEncontrado=false;
+                    break;
+                }
+            }
+        }
+        if (noEncontrado) {
+            System.out.println("No se encontro arma");
         }
     }
 
@@ -75,11 +115,11 @@ public class personaje {
         this.nombre = nombre;
     }
 
-    public int getPuntosVida() {
+    public double getPuntosVida() {
         return PuntosVida;
     }
 
-    public void setPuntosVida(int PuntosVida) {
+    public void setPuntosVida(double PuntosVida) {
         this.PuntosVida = PuntosVida;
     }
 

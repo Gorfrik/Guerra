@@ -167,12 +167,11 @@ public class Guerra {
             if (personajes.get(defensor).getArmaspj().get(consultadef)
                     instanceof Defensa def ) {
                 
-                double daño =vida - personajes.get(atacante).getPuntosAtaque()
+                double daño =personajes.get(atacante).getPuntosAtaque()
                         -(personajes.get(atacante).getPuntosAtaque()*def.PorcentajeVida);
                 personajes.get(defensor).setPuntosVida(vida-daño);
                 
 
-                
             } else {
                 personajes.get(defensor).setPuntosVida(vida-personajes.get(atacante).getPuntosAtaque());
             }

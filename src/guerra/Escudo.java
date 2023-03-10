@@ -21,8 +21,7 @@ public class Escudo extends Defensa {
 
     @Override
     public void equiparPersonaje(personaje pj) {
-        float nuevadef = (float) pj.getPuntosVida() + ((float) pj.getPuntosVida() * this.PorcentajeVida);
-        pj.setPuntosVida(nuevadef);
+
         ActivarProteccion(pj);
     }
 

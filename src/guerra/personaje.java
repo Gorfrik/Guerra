@@ -25,7 +25,7 @@ public class personaje {
     public personaje(String nombre) {
         this.nombre = nombre;
         this.PuntosVida = 1000;
-        this.PuntosAtaque = 10;
+        this.PuntosAtaque = 50;
         this.ataqueArquero = false;
         this.ataqueCuerpoACuerpo = false;
         this.proteccionArquero = false;

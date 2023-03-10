@@ -171,6 +171,9 @@ public class Guerra {
 
                 double daño = personajes.get(atacante).getPuntosAtaque()
                         - (personajes.get(atacante).getPuntosAtaque() * def.PorcentajeVida);
+                
+                valorarResistencias(personajes.get(defensor), personajes.get(atacante));
+     /TODO           
                 personajes.get(defensor).setPuntosVida(vida - daño);
 
             } else {
@@ -266,9 +269,20 @@ public class Guerra {
 
     }
 
+    public static int valorarResistencias(personaje pj1, personaje pj2) {
+
+        if (pj1.isAtaqueArquero() && pj2.isProteccionArquero()) {
+            return 2;
+        }
+        if (pj1.isAtaqueCuerpoACuerpo() && pj2.isProteccionCuerpoACuerpo()) {
+            return 2;
+        }
+        return 0;
+    }
+
     public static void verArmasVida(ArrayList<personaje> personajes, int jugador, int roll) {
         System.out.println(personajes.get(jugador).getNombre());
-        System.out.println("Vida: " + personajes.get(jugador).getPuntosVida()+" - "+personajes.get(jugador).getNombre());
+        System.out.println("Vida: " + personajes.get(jugador).getPuntosVida() + " - " + personajes.get(jugador).getNombre());
         System.out.println("Armas/Defensa:");
 
         for (int i = 0; i < personajes.get(jugador).getArmaspj().size(); i++) {

@@ -18,8 +18,8 @@ public class Guerra {
         System.out.println("2).Añadir arma al inventario");
         System.out.println("3).Quitar arma del inventario");
         System.out.println("4).Comenzar combate");
-        System.out.println("5).");
-        System.out.println("6).");
+        System.out.println("5).Salir");
+
     }
 
     public static void main(String[] args) {
@@ -166,16 +166,17 @@ public class Guerra {
                 personajes.get(atacante).setPuntosAtaque(0);
             }
             double vida = personajes.get(defensor).getPuntosVida();
+            if (consultadef != -1) {
+                if (personajes.get(defensor).getArmaspj().get(consultadef) instanceof Defensa def) {
 
-            if (personajes.get(defensor).getArmaspj().get(consultadef) instanceof Defensa def) {
+                    double daño = personajes.get(atacante).getPuntosAtaque()
+                            - (personajes.get(atacante).getPuntosAtaque() * def.PorcentajeVida);
 
-                double daño = personajes.get(atacante).getPuntosAtaque()
-                        - (personajes.get(atacante).getPuntosAtaque() * def.PorcentajeVida);
-                
-                valorarResistencias(personajes.get(defensor), personajes.get(atacante));
-     /TODO           
-                personajes.get(defensor).setPuntosVida(vida - daño);
+                    int res = valorarResistencias(personajes.get(defensor), personajes.get(atacante));
+                    daño = daño / res;
+                    personajes.get(defensor).setPuntosVida(vida - daño);
 
+                }
             } else {
                 personajes.get(defensor).setPuntosVida(vida - personajes.get(atacante).getPuntosAtaque());
             }
@@ -185,7 +186,16 @@ public class Guerra {
             resetStats(personajes, jug1, jug2);
 
         } while (!(personajes.get(jug1).getPuntosVida() < 0 || personajes.get(jug2).getPuntosVida() < 0));
+        System.out.println("Vida: " + personajes.get(jug1).getPuntosVida() + " - " + personajes.get(jug1).getNombre());
+        System.out.println("Vida: " + personajes.get(jug2).getPuntosVida() + " - " + personajes.get(jug2).getNombre());
+        if (personajes.get(jug1).getPuntosVida() > personajes.get(jug2).getPuntosVida()) {
+            System.out.println("El ganador es " + personajes.get(jug1).getNombre());
+        } else {
+            System.out.println("El ganador es " + personajes.get(jug2).getNombre());
+        }
+
         resetVida(personajes, jug1, jug2);
+
     }
 
     public static int suvirStats(personaje pj, int roll) {
@@ -200,14 +210,14 @@ public class Guerra {
                     if (pj.getArmaspj().get(i) instanceof Espada esp) {
                         System.out.println("Espada equipada");
                         esp.equiparPersonaje(pj);
-                        consulta = 1;
+                        consulta = 0;
                         comp = false;
                     }
                 } else if (Arma.equalsIgnoreCase("Arco")) {
                     if (pj.getArmaspj().get(i) instanceof Arco arc) {
                         System.out.println("Arco equipado!");
                         arc.equiparPersonaje(pj);
-                        consulta = 2;
+                        consulta = 1;
                         comp = false;
                     }
                 }
@@ -215,17 +225,21 @@ public class Guerra {
             System.out.println("P.Ata= " + pj.getPuntosAtaque());
         } else {
             for (int i = 0; i < pj.getArmaspj().size(); i++) {
-                if (pj.getArmaspj().get(i) instanceof Armadura arm) {
-                    System.out.println("Armadura equipada");
-                    arm.equiparPersonaje(pj);
-                    consulta = 3;
-                    comp = false;
+                if (Arma.equalsIgnoreCase("Armadura")) {
+                    if (pj.getArmaspj().get(i) instanceof Armadura arm) {
+                        System.out.println("Armadura equipada");
+                        arm.equiparPersonaje(pj);
+                        consulta = 2;
+                        comp = false;
+                    }
+                } else if (Arma.equalsIgnoreCase("Escudo")) {
+                    if (pj.getArmaspj().get(i) instanceof Escudo esc) {
+                        System.out.println("Escudo equipado");
+                        esc.equiparPersonaje(pj);
+                        consulta = 3;
+                        comp = false;
 
-                } else if (pj.getArmaspj().get(i) instanceof Escudo esc) {
-                    System.out.println("Escudo equipado");
-                    esc.equiparPersonaje(pj);
-                    consulta = 4;
-                    comp = false;
+                    }
                 }
             }
         }
@@ -272,12 +286,16 @@ public class Guerra {
     public static int valorarResistencias(personaje pj1, personaje pj2) {
 
         if (pj1.isAtaqueArquero() && pj2.isProteccionArquero()) {
+            System.out.println("arquero");
             return 2;
+
         }
         if (pj1.isAtaqueCuerpoACuerpo() && pj2.isProteccionCuerpoACuerpo()) {
+            System.out.println("cuerpo");
             return 2;
         }
-        return 0;
+        System.out.println("nada");
+        return 1;
     }
 
     public static void verArmasVida(ArrayList<personaje> personajes, int jugador, int roll) {

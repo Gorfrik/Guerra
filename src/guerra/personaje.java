@@ -20,7 +20,8 @@ public class personaje {
     private boolean proteccionCuerpoACuerpo;
     private boolean ataqueArquero;
     private boolean ataqueCuerpoACuerpo;
-    private ArrayList<Arma> Armaspj = new ArrayList();
+    private ArrayList<Arma> Armaspj;
+    private ArrayList<Pocion> Pociones;
 
     public personaje(String nombre) {
         this.nombre = nombre;
@@ -30,6 +31,8 @@ public class personaje {
         this.ataqueCuerpoACuerpo = false;
         this.proteccionArquero = false;
         this.proteccionCuerpoACuerpo = false;
+        this.Armaspj = new ArrayList();
+        this.Pociones = new ArrayList();
     }
 
     public void equipar() {
@@ -50,12 +53,14 @@ public class personaje {
                     }
                     break;
                 case "escudo":
-                         if(Armaspj.get(i) instanceof Escudo esc)
+                    if (Armaspj.get(i) instanceof Escudo esc) {
                         esc.equiparPersonaje(this);
+                    }
                     break;
                 case "armadura":
-                         if(Armaspj.get(i) instanceof Armadura ar)
+                    if (Armaspj.get(i) instanceof Armadura ar) {
                         ar.equiparPersonaje(this);
+                    }
                     break;
             }
         }
@@ -71,25 +76,25 @@ public class personaje {
             if (armaTirar.equalsIgnoreCase("arco")) {
                 if (Armaspj.get(i) instanceof Arco) {
                     Armaspj.remove(i);
-                    noEncontrado=false;
+                    noEncontrado = false;
                     break;
                 }
             } else if (armaTirar.equalsIgnoreCase("espada")) {
                 if (Armaspj.get(i) instanceof Espada) {
                     Armaspj.remove(i);
-                    noEncontrado=false;
+                    noEncontrado = false;
                     break;
                 }
             } else if (armaTirar.equalsIgnoreCase("armadura")) {
                 if (Armaspj.get(i) instanceof Armadura) {
                     Armaspj.remove(i);
-                    noEncontrado=false;
+                    noEncontrado = false;
                     break;
                 }
             } else if (armaTirar.equalsIgnoreCase("escudo")) {
                 if (Armaspj.get(i) instanceof Escudo) {
                     Armaspj.remove(i);
-                    noEncontrado=false;
+                    noEncontrado = false;
                     break;
                 }
             }
@@ -97,6 +102,11 @@ public class personaje {
         if (noEncontrado) {
             System.out.println("No se encontro arma");
         }
+    }
+
+    public void EquiparPocion(Pocion poc) {
+        Pociones.add(poc);
+
     }
 
     public ArrayList<Arma> getArmaspj() {
@@ -162,5 +172,10 @@ public class personaje {
     public void setAtaqueCuerpoACuerpo(boolean ataqueCuerpoACuerpo) {
         this.ataqueCuerpoACuerpo = ataqueCuerpoACuerpo;
     }
+
+    public ArrayList<Pocion> getPociones() {
+        return Pociones;
+    }
+
 
 }

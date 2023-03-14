@@ -16,7 +16,7 @@ public class Pocion {
     private int CantHechizos;
 
     public Pocion(String tipo,  int CantHechizos) {
-        this.nivel = 0;
+        this.nivel = 1;
         this.tipo = tipo;
         this.CantHechizos = CantHechizos;
     }

@@ -34,11 +34,17 @@ public class Guerra {
         personajes.get(0).añadirArm(new Arco());
         personajes.get(0).añadirArm(new Escudo());
         personajes.get(0).añadirArm(new Armadura());
+        personajes.get(0).EquiparPocion(new Pocion("Curacion", 5));
+        personajes.get(0).EquiparPocion(new Pocion("PotenciaAtak", 5));
+        personajes.get(0).EquiparPocion(new Pocion("BajaAtak", 5));
 
         personajes.get(1).añadirArm(new Espada());
         personajes.get(1).añadirArm(new Arco());
         personajes.get(1).añadirArm(new Escudo());
         personajes.get(1).añadirArm(new Armadura());
+        personajes.get(1).EquiparPocion(new Pocion("Curacion", 5));
+        personajes.get(1).EquiparPocion(new Pocion("PotenciaAtak", 5));
+        personajes.get(1).EquiparPocion(new Pocion("BajaAtak", 5));
 
         int buscar;
         int caso;
@@ -160,6 +166,7 @@ public class Guerra {
         System.out.println("\n-Comienza " + personajes.get(0).getNombre() + "\n");
 
         int contadorRondas = 0;
+        double nivelPocion;
         do {
             int atacante;
             int defensor;
@@ -173,8 +180,41 @@ public class Guerra {
 //Atacante
             verArmasVida(personajes, atacante, 0);
             int consultaAta = suvirStats(personajes.get(atacante), 0);
-            int usaPocion=verPocion(personajes.get(atacante));
+            int usaPocion = verPocion(personajes.get(atacante));
+            
+           //Uso de pociones
 
+                    if (usaPocion != -1) {
+                        nivelPocion = personajes.get(atacante).getPociones().get(usaPocion).getNivel();
+                        nivelPocion = nivelPocion * 0.05;
+                        int cantidad = personajes.get(atacante).getPociones().get(usaPocion).getCantHechizos();
+                        personajes.get(atacante).getPociones().get(usaPocion).setCantHechizos(cantidad-1);
+
+                        if (usaPocion == 1) {
+                            //curacion
+                            System.out.println("antes - "+personajes.get(atacante).getPuntosVida());
+                           double vidaAtak=personajes.get(atacante).getPuntosVida()+(personajes.get(atacante).getPuntosVida()*nivelPocion);
+                           personajes.get(atacante).setPuntosVida(vidaAtak);
+                           System.out.println("Ahora tu vida es de: " + personajes.get(atacante).getPuntosVida());
+                        }
+                        if (usaPocion == 2) {
+                            //PotenciaAtak
+                            System.out.println("antes - "+personajes.get(atacante).getPuntosAtaque());
+                           double atk=personajes.get(atacante).getPuntosAtaque()+personajes.get(atacante).getPuntosAtaque()*nivelPocion;
+                           personajes.get(atacante).setPuntosAtaque(atk);
+                            System.out.println("Ahora tu ataque es de: "+personajes.get(atacante).getPuntosAtaque());
+                        }
+                        if (usaPocion == 3) {
+                             //BajaAtak del contrincante
+                             System.out.println("antes - "+personajes.get(defensor).getPuntosAtaque());
+                            double atk=personajes.get(defensor).getPuntosAtaque()-personajes.get(atacante).getPuntosAtaque()*nivelPocion;
+                           personajes.get(defensor).setPuntosAtaque(atk);
+                           System.out.println("Ahora el ataque del defensor es de: "+personajes.get(defensor).getPuntosAtaque());
+                        }
+                    } else {
+                        System.out.println("No usas ninguna pocion");
+                    }
+ 
 //Defensor
             verArmasVida(personajes, defensor, 1);
             int consultadef = suvirStats(personajes.get(defensor), 1);
@@ -189,13 +229,7 @@ public class Guerra {
 
                     double daño = personajes.get(atacante).getPuntosAtaque()
                             - (personajes.get(atacante).getPuntosAtaque() * def.PorcentajeVida);
-//Uso de pociones
 
-
-
-
-
-                    
 //resistencias
                     int res = valorarResistencias(personajes.get(defensor), personajes.get(atacante));
                     daño = daño / res;
@@ -353,15 +387,15 @@ public class Guerra {
         Scanner sn = new Scanner(System.in);
         for (int i = 0; i < pj.getPociones().size(); i++) {
 
-            System.out.println((i + 1) + " " + pj.getPociones().get(i).getTipo());
+            System.out.println((i+1) + " " + pj.getPociones().get(i).getTipo());
             System.out.println("Cantidad de pociones: " + pj.getPociones().get(i).getCantHechizos());
 
         }
         if (pj.getPociones().size() != 0) {
             System.out.println("Que pocion deseas utilizar [1-3]");
-            int usaPocion = sn.nextInt() - 1;
+            int usaPocion = sn.nextInt();
             return usaPocion;
-            
+
         } else {
             System.out.println("No tienes pociones");
         }

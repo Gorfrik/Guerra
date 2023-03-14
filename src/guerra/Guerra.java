@@ -19,7 +19,8 @@ public class Guerra {
         System.out.println("3).Quitar arma del inventario");
         System.out.println("4).Comenzar combate");
         System.out.println("5).Crear pocion");
-        System.out.println("6).Salir");
+        System.out.println("6).Suvir nivel a una pocion");
+        System.out.println("7).Salir");
 
     }
 
@@ -126,24 +127,36 @@ public class Guerra {
                 case 5:
                     System.out.println("Que personaje va a crear la pocion?");
                     buscar = buscarpj(personajes);
-                    System.out.println("Que Tipo de pocion es? \n1.Curacion\n2.Ataque\n3.BajaAtaque");
-                    String tipo = sn.next();
-                    System.out.println("Que cantidad de pociones vas a crear");
-                    int cant = sn.nextInt();
-                    if (tipo.equalsIgnoreCase("curacion") || tipo.equalsIgnoreCase("ataque") || tipo.equalsIgnoreCase("bajaataque")) {
+                    if (buscar != -1) {
+                        System.out.println("Que Tipo de pocion es? \n1.Curacion\n2.Ataque\n3.BajaAtaque");
+                        String tipo = sn.next();
+                        System.out.println("Que cantidad de pociones vas a crear");
+                        int cant = sn.nextInt();
+                        if (tipo.equalsIgnoreCase("curacion") || tipo.equalsIgnoreCase("ataque") || tipo.equalsIgnoreCase("bajaataque")) {
 
-                        Pocion poc = new Pocion(tipo, cant);
-                        personajes.get(buscar).EquiparPocion(poc);
+                            Pocion poc = new Pocion(tipo, cant);
+                            personajes.get(buscar).EquiparPocion(poc);
+                        } else {
+                            System.out.println("No se reconoce la pocion");
+                        }
                     } else {
-                        System.out.println("No se reconoce la pocion");
+                        System.out.println("No se encontro personaje");
                     }
-
                     break;
                 case 6:
+                    buscar = buscarpj(personajes);
+                    if (buscar != -1) {
+                        verPociones(personajes.get(buscar));
+                        //personajes.get(buscar).getPociones().
+                    } else {
+                        System.out.println("No se encontro personaje");
+                    }
+                    break;
+                case 7:
 
                     break;
             }
-        } while (caso != 6);
+        } while (caso != 7);
         System.out.println("Fin");
 
     }
@@ -400,12 +413,7 @@ public class Guerra {
 
     public static int verPocion(personaje pj) {
         Scanner sn = new Scanner(System.in);
-        for (int i = 0; i < pj.getPociones().size(); i++) {
-
-            System.out.println("\n\t" + (i + 1) + ". " + pj.getPociones().get(i).getTipo());
-            System.out.println("\tCantidad de pociones: " + pj.getPociones().get(i).getCantHechizos());
-
-        }
+        verPociones(pj);
         if (pj.getPociones().size() != 0) {
             System.out.println("\tQue pocion deseas utilizar [1-3]");
             int usaPocion = sn.nextInt();
@@ -415,5 +423,14 @@ public class Guerra {
             System.out.println("No tienes pociones");
         }
         return -1;
+    }
+
+    public static void verPociones(personaje pj) {
+        for (int i = 0; i < pj.getPociones().size(); i++) {
+
+            System.out.println("\n\t" + (i + 1) + ". " + pj.getPociones().get(i).getTipo());
+            System.out.println("\tCantidad de pociones: " + pj.getPociones().get(i).getCantHechizos());
+            System.out.println("\tNivel de pocion: "+pj.getPociones().get(i).getNivel()+"\n");
+        }
     }
 }

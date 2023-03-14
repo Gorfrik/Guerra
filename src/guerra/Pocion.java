@@ -38,7 +38,7 @@ public class Pocion {
     }
 
     public void setNivel(int nivel) {
-        this.nivel = nivel;
+        this.nivel += nivel;
     }
 
     public String getTipo() {
